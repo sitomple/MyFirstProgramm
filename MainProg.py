@@ -25,7 +25,7 @@ while run:
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             if (x[0] > event.pos[0]):
-                k = (abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0])) #abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0]))      abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0]))
+                k = (abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0]))#abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0]))      abs(x[1] - event.pos[1]) / abs(x[0] - event.pos[0]))
                 while x[0] > event.pos[0]:
                     x[0] -= 1
                     x[1] = k * x[0]
