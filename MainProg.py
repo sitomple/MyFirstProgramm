@@ -5,7 +5,7 @@ window = pygame.display.set_mode((500,500))
 
 pygame.display.set_caption("Zuma")
 
-x = [100 , 250]
+x = [100, 250]
 
 wight = 40
 height = 40
