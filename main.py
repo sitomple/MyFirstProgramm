@@ -1,17 +1,16 @@
 import sys
 
 from PyQt5 import QtGui, QtWidgets
-from ui_Main_form import Ui_MainWindow
+#from ui_untitled import Ui_MainWindow
 from Employee import Employee
+from gameFunction import gameSettings
 
 def runApplication():
     app = QtWidgets.QApplication(sys.argv)
-    mainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(mainWindow)
+    mainWindow = gameSettings()
     mainWindow.show()
     sys.exit(app.exec())
 
 if __name__ == '__main__':
-    mainWorker = Employee('Sitomple')
+    #mainWorker = Employee('Sitomple')
     runApplication()
