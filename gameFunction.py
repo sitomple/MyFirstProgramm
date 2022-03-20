@@ -25,9 +25,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
     def gameZuma(self):
         self.itsGame.show()
         self.mainMenu.show()
-        self.itsGame.setStyleSheet("background-image : url(игровое поле1.jpg) center center cover no-repeat fixed;")
-        self.zaba.setPixmap(QPixmap("background-image : url(Без имени-5.jpg)"))
-        #self.zaba.setPixmap(QPixmap("Без имени-5.jpg"))
+        self.zaba.show()
 
     # Тут я прячу все кнопки
     #Тут запуск игры(прячу кнопки и запускаю поле)
@@ -53,13 +51,14 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.welcome.show()
         self.itsGame.hide()
         self.mainMenu.hide()
+        self.zaba.hide()
 
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_W:
-            self.zaba.setPixmap(QPixmap("background-image : url(zabaMid.jpg)"))
+            self.zaba.setPixmap(QPixmap("zabaMid.jpg"))
         elif e.key() == Qt.Key_S:
-            self.zaba.setPixmap(QPixmap("background-image : url(zabaBackside.jpg)"))
+            self.zaba.setPixmap(QPixmap("zabaBackside.jpg"))
         elif e.key() == Qt.Key_D:
-            self.zaba.setPixmap(QPixmap("background-image : url(zabaRight.jpg)"))
+            self.zaba.setPixmap(QPixmap("zabaRight.jpg"))
         elif e.key() == Qt.Key_A:
-            self.zaba.setPixmap(QPixmap("background-image : url(zabaLeft.jpg)"))
+            self.zaba.setPixmap(QPixmap("zabaLeft.jpg"))
