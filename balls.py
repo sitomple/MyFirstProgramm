@@ -8,6 +8,7 @@ from PyQt5.QtCore import Qt, QPoint, QEvent
 from PyQt5.QtGui import QPainter, QColor
 from random import choice, randint
 from PyQt5.QtWidgets import QApplication, QMainWindow
+import gameFunction
 
 
 class runBalls():
@@ -15,15 +16,10 @@ class runBalls():
         x = 491
         y = 295
         self.ball = QtWidgets.QLabel(self)
+        self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
         self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
         self.ball.setScaledContents(True)
-        while (y > 14):
-            y -= 5
-            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-            self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
-            self.ball.setScaledContents(True)
-            self.ball.show()
-            #time.sleep(0)
+        self.ball.show()
 
 
     def createball2(self):
@@ -52,3 +48,45 @@ class runBalls():
         self.ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
         self.ball4.setScaledContents(True)
         self.ball4.show()
+
+
+    def fire (self, zabaLook):
+        if zabaLook == 1:
+            x = 492
+            y = 11
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
+            self.ball.setScaledContents(True)
+            self.ball.show()
+            self.ball.deleteLater()
+
+        elif zabaLook == 2:
+            x = 493
+            y = 699
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            self.ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
+            self.ball.setScaledContents(True)
+            self.ball.show()
+            self.ball.deleteLater()
+
+        elif zabaLook == 3:
+            x = 974
+            y = 355
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            self.ball.setPixmap(QtGui.QPixmap("blueBall.png"))
+            self.ball.setScaledContents(True)
+            self.ball.show()
+            self.ball.deleteLater()
+
+        elif zabaLook == 4:
+            x = 10
+            y = 355
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            self.ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
+            self.ball.setScaledContents(True)
+            self.ball.show()
+            self.ball.deleteLater()

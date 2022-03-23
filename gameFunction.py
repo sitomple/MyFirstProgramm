@@ -10,7 +10,8 @@ import ui_untitled
 import balls
 
 class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBalls):
-    pole = 1;
+    pole = 1
+    zabaLook = 1
 
     #Тут обработка событий
     def __init__(self):
@@ -113,38 +114,32 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBa
         self.changeMenu.hide()
 
         #Тут убираю мячика когда сделаю их удаление их надо будет удалить
-        self.ball.hide()
-        self.ball2.hide()
-        self.ball3.hide()
-        self.ball4.hide()
+        #self.ball.hide() Эту скорее всего надо оставить
+
+        #self.ball2.hide()
+        #self.ball3.hide()
+        #self.ball4.hide()
 
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_W:
             self.zaba.setPixmap(QPixmap("zabaMid.png"))
+            self.zabaLook = 1
             #balls.runBalls.createball(self)#Тут создаю шарик
-
-
-            x = 491
-            y = 295
-            self.ball = QtWidgets.QLabel(self)
-            self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
-            self.ball.setScaledContents(True)
-            while (y > 14):
-                y -= 5
-                self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-                self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
-                self.ball.setScaledContents(True)
-                self.ball.show()
-                # time.sleep(0)
-
-
 
         elif e.key() == Qt.Key_S:
             self.zaba.setPixmap(QPixmap("zabaBackside.png"))
-            balls.runBalls.createball2(self)  # Тут создаю шарик
+            self.zabaLook = 2
+            #balls.runBalls.createball2(self)  # Тут создаю шарик
+
         elif e.key() == Qt.Key_D:
             self.zaba.setPixmap(QPixmap("zabaRight.png"))
-            balls.runBalls.createball3(self)  # Тут создаю шарик
+            self.zabaLook = 3
+            #balls.runBalls.createball3(self)  # Тут создаю шарик
+
         elif e.key() == Qt.Key_A:
             self.zaba.setPixmap(QPixmap("zabaLeft.png"))
-            balls.runBalls.createball4(self)  # Тут создаю шарик
+            self.zabaLook = 4
+            #balls.runBalls.createball4(self)  # Тут создаю шарик
+
+        elif e.key() == Qt.Key_E:
+            balls.runBalls.fire(self, self.zabaLook)  # Тут создаю шарик
