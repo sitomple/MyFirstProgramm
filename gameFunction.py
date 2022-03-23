@@ -7,23 +7,78 @@ from PyQt5.QtGui import QPainter, QColor
 from random import choice, randint
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_untitled
+import balls
 
-class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
+class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBalls):
+    pole = 1;
 
     #Тут обработка событий
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
+        self.setupUi(self)# Её не убирать !!!
+
+    # Тут создание лэйбла пример
+        '''self.my_text = QtWidgets.QLabel('Привет codeby!')
+        self.my_text.setAlignment(QtCore.Qt.AlignCenter)
+        self.my_text.show()'''
+        #self.label = QtWidgets.QLabel( self)
+        #self.label.setPixmap(QtGui.QPixmap("игровое поле1.jpg"))
+
+        self.startMenu()
+        self.startGame.clicked.connect(lambda: self.hideAll())
+        self.settingsButton.clicked.connect(lambda: self.settings())
+        self.gameZon1.clicked.connect(lambda: self.firstGameZone())
+        self.gameZon2.clicked.connect(lambda: self.secondGameZone())
+        self.gameZon3.clicked.connect(lambda: self.thirdGameZone())
+        self.mainMenu.clicked.connect(lambda: self.menu())
+        self.exitGame.clicked.connect(lambda: self.exit())
+        #self.exitGame.clicked.connect(MainWindow.) Тут надо написать выход из программы
+
+    #Стартовое меню
+    def startMenu(self):
         self.mainMenu.hide()
         self.itsGame.hide()
         self.zaba.hide()
-        self.startGame.clicked.connect(lambda:self.hideAll())
-        self.mainMenu.clicked.connect(lambda:self.menu())
-        #self.exitGame.clicked.connect(MainWindow.) Тут надо написать выход из программы
+        self.changeMenu.hide()
+        self.gameZon1.hide()
+        self.gameZon2.hide()
+        self.gameZon3.hide()
+
+    #Тут выход из игры
+    def exit (self):
+        QMainWindow.close(self)
+
+    #Тут настройки для игры
+    def settings(self):
+        self.changeMenu.show()
+        self.gameZon1.show()
+        self.gameZon2.show()
+        self.gameZon3.show()
+        self.mainMenu.show()
+        self.exitGame.hide()
+        self.startGame.hide()
+        self.settingsButton.hide()
+        self.welcome.hide()
+
+    #Тут игровые поля
+    def firstGameZone(self):
+        self.pole = 1
+    def secondGameZone(self):
+        self.pole = 2
+    def thirdGameZone(self):
+        self.pole = 3
 
     #Тут игровое поле
     def gameZuma(self):
-        self.itsGame.show()
+        if self.pole == 1:
+            self.itsGame.setPixmap(QtGui.QPixmap("игровое поле1.jpg"))
+            self.itsGame.show()
+        if self.pole == 2:
+            self.itsGame.setPixmap(QtGui.QPixmap("игровое поле2.jpg"))
+            self.itsGame.show()
+        if self.pole == 3:
+            self.itsGame.setPixmap(QtGui.QPixmap("игровое поле3.jpg"))
+            self.itsGame.show()
         self.mainMenu.show()
         self.zaba.show()
 
@@ -52,13 +107,44 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.itsGame.hide()
         self.mainMenu.hide()
         self.zaba.hide()
+        self.gameZon1.hide()
+        self.gameZon2.hide()
+        self.gameZon3.hide()
+        self.changeMenu.hide()
+
+        #Тут убираю мячика когда сделаю их удаление их надо будет удалить
+        self.ball.hide()
+        self.ball2.hide()
+        self.ball3.hide()
+        self.ball4.hide()
 
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_W:
-            self.zaba.setPixmap(QPixmap("zabaMid.jpg"))
+            self.zaba.setPixmap(QPixmap("zabaMid.png"))
+            #balls.runBalls.createball(self)#Тут создаю шарик
+
+
+            x = 491
+            y = 295
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
+            self.ball.setScaledContents(True)
+            while (y > 14):
+                y -= 5
+                self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+                self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
+                self.ball.setScaledContents(True)
+                self.ball.show()
+                # time.sleep(0)
+
+
+
         elif e.key() == Qt.Key_S:
-            self.zaba.setPixmap(QPixmap("zabaBackside.jpg"))
+            self.zaba.setPixmap(QPixmap("zabaBackside.png"))
+            balls.runBalls.createball2(self)  # Тут создаю шарик
         elif e.key() == Qt.Key_D:
-            self.zaba.setPixmap(QPixmap("zabaRight.jpg"))
+            self.zaba.setPixmap(QPixmap("zabaRight.png"))
+            balls.runBalls.createball3(self)  # Тут создаю шарик
         elif e.key() == Qt.Key_A:
-            self.zaba.setPixmap(QPixmap("zabaLeft.jpg"))
+            self.zaba.setPixmap(QPixmap("zabaLeft.png"))
+            balls.runBalls.createball4(self)  # Тут создаю шарик
