@@ -7,9 +7,9 @@ from PyQt5.QtGui import QPainter, QColor
 from random import choice, randint
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_untitled
-import balls
+from balls import RunBalls
 
-class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBalls):
+class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
     pole = 1
     zabaLook = 1
 
@@ -17,7 +17,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBa
     def __init__(self):
         super().__init__()
         self.setupUi(self)# Её не убирать !!!
-
+        self._runBalls = RunBalls(self)
     # Тут создание лэйбла пример
         '''self.my_text = QtWidgets.QLabel('Привет codeby!')
         self.my_text.setAlignment(QtCore.Qt.AlignCenter)
@@ -124,6 +124,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBa
         if e.key() == Qt.Key_W:
             self.zaba.setPixmap(QPixmap("zabaMid.png"))
             self.zabaLook = 1
+            self._runBalls.createball();
             #balls.runBalls.createball(self)#Тут создаю шарик
 
         elif e.key() == Qt.Key_S:
@@ -142,4 +143,4 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow, balls.runBa
             #balls.runBalls.createball4(self)  # Тут создаю шарик
 
         elif e.key() == Qt.Key_E:
-            balls.runBalls.fire(self, self.zabaLook)  # Тут создаю шарик
+            self._runBalls.fire(self.zabaLook)  # Тут создаю шарик

@@ -11,15 +11,51 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 import gameFunction
 
 
-class runBalls():
+class RunBalls(QtCore.QObject):
+    def __init__(self, parent):
+        QtCore.QObject.__init__(self)
+        self._parent = parent
+        self._isUpBall = False
+        self.ballList = []
+        self.tm = QtCore.QTimer(self)
+        self.tm.timeout.connect(self.moveBalls)
+        self.tm.start(100)
+
+    def moveBalls(self):
+        removeList = []
+        for ball in self.ballList:
+            if ball.toolTip() == "1":
+                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-10, 80, 60))
+                if ball.y() < 11:
+                    if (self._isUpBall==True):
+                        self.removeUpBall()
+                    ball.deleteLater()
+                    removeList.append(ball)
+        for ball in removeList:
+            self.ballList.remove(ball)
+
+
     def createball(self):
         x = 491
-        y = 295
-        self.ball = QtWidgets.QLabel(self)
-        self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-        self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
-        self.ball.setScaledContents(True)
-        self.ball.show()
+        y = 10
+        if self._isUpBall:
+            return
+        ball = QtWidgets.QLabel(self._parent)
+        ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+        ball.setPixmap(QtGui.QPixmap("redBall.png"))
+        ball.setScaledContents(True)
+        ball.setToolTip("1")
+        ball.show()
+        self._upBall = ball
+        self._isUpBall = True
+        self._upTimer = QtCore.QTimer(self)
+        self._upTimer.timeout.connect(self.removeUpBall)
+        self._upTimer.start(2000)
+
+    def removeUpBall(self):
+        self._upBall.deleteLater()
+        self._isUpBall = False
+        self._upTimer.stop()
 
 
     def createball2(self):
@@ -49,17 +85,20 @@ class runBalls():
         self.ball4.setScaledContents(True)
         self.ball4.show()
 
-
     def fire (self, zabaLook):
         if zabaLook == 1:
+            #x = 492
+            #y = 11
             x = 492
-            y = 11
-            self.ball = QtWidgets.QLabel(self)
-            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-            self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
-            self.ball.setScaledContents(True)
-            self.ball.show()
-            self.ball.deleteLater()
+            y = 360
+            ball = QtWidgets.QLabel(self._parent)
+            ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            ball.setPixmap(QtGui.QPixmap("redBall.png"))
+            ball.setScaledContents(True)
+            ball.setToolTip("1")
+            ball.show()
+            self.ballList.append(ball)
+            #self.ball.deleteLater()
 
         elif zabaLook == 2:
             x = 493
@@ -69,7 +108,7 @@ class runBalls():
             self.ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
             self.ball.setScaledContents(True)
             self.ball.show()
-            self.ball.deleteLater()
+            #self.ball.deleteLater()
 
         elif zabaLook == 3:
             x = 974
@@ -89,4 +128,5 @@ class runBalls():
             self.ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
             self.ball.setScaledContents(True)
             self.ball.show()
+
             self.ball.deleteLater()
