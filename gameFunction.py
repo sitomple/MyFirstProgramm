@@ -130,6 +130,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         elif e.key() == Qt.Key_S:
             self.zaba.setPixmap(QPixmap("zabaBackside.png"))
             self.zabaLook = 2
+            self._runBalls.createball2();
             #balls.runBalls.createball2(self)  # Тут создаю шарик
 
         elif e.key() == Qt.Key_D:
