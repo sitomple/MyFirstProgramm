@@ -17,8 +17,8 @@ class RunBalls(QtCore.QObject):
         self._parent = parent
         self._isUpBall = False
         self._isDownBall = False
-        self._isLeftBall3 = False
-        self._isRightBall4 = False
+        self._isLeftBall = False
+        self._isRightBall = False
         self.ballList = []
         self.tm = QtCore.QTimer(self)
         self.tm.timeout.connect(self.moveBalls)
@@ -84,7 +84,7 @@ class RunBalls(QtCore.QObject):
     def removeUpBall(self):
         self._upBall.deleteLater()
         self._isUpBall = False
-
+        self._upTimer.stop()
 
     def createball2(self):
         x = 491
@@ -99,14 +99,15 @@ class RunBalls(QtCore.QObject):
         ball2.show()
         self._downBall = ball2
         self._isDownBall = True
-        self._upTimer = QtCore.QTimer(self)
-        self._upTimer.timeout.connect(self.removeDownBall)
-        self._upTimer.start(2000)
+        self._upTimer2 = QtCore.QTimer(self)
+        self._upTimer2.timeout.connect(self.removeDownBall)
+        self._upTimer2.start(2000)
 
 
     def removeDownBall(self):
         self._downBall.deleteLater()
         self._isDownBall = False
+        self._upTimer2.stop()
 
     def createball3(self):
         x = 565
@@ -121,9 +122,14 @@ class RunBalls(QtCore.QObject):
         ball.show()
         self._LeftBall3 = ball
         self._isLeftBall3 = True
-        self._upTimer = QtCore.QTimer(self)
-        self._upTimer.timeout.connect(self.removeUpBall)
-        self._upTimer.start(2000)
+        self._upTimer3 = QtCore.QTimer(self)
+        self._upTimer3.timeout.connect(self.removeUpBall)
+        self._upTimer3.start(2000)
+
+    def removeLeftDownBall(self):
+        self._downBall.deleteLater()
+        self._isDownBall = False
+        self._upTimer3.stop()
 
     def createball4(self):
         x = 420
@@ -133,6 +139,11 @@ class RunBalls(QtCore.QObject):
         self.ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
         self.ball4.setScaledContents(True)
         self.ball4.show()
+
+    def removeRightBall(self):
+        self._downBall.deleteLater()
+        self._isDownBall = False
+        self._upTimer2.stop()
 
     def fire (self, zabaLook):
         if zabaLook == 1:
