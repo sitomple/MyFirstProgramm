@@ -31,7 +31,7 @@ class RunBalls(QtCore.QObject):
             if ball.toolTip() == "1":
                 ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-10, 80, 60))
                 if ball.y() < 11:
-                    if (self._isUpBall==True):
+                    if (self._isUpBall == True):
                         self.removeUpBall()
                     ball.deleteLater()
                     removeList.append(ball)
@@ -39,24 +39,24 @@ class RunBalls(QtCore.QObject):
             if ball.toolTip() == "2":
                 ball.setGeometry(QtCore.QRect(ball.x(), ball.y()+10, 80, 60))
                 if ball.y() > 699:
-                    if (self._isDownBall==True):
+                    if (self._isDownBall == True):
                         self.removeDownBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
             if ball.toolTip() == "3":
-                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-10, 80, 60))
-                if ball.y() < 11:
-                    if (self._isUpBall==True):
-                        self.removeUpBall()
+                ball.setGeometry(QtCore.QRect(ball.x()+10, ball.y(), 80, 60))
+                if ball.x() > 974:
+                    if (self._isRightBall == True):
+                        self.removeRightBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
             if ball.toolTip() == "4":
-                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-10, 80, 60))
-                if ball.y() < 11:
-                    if (self._isUpBall==True):
-                        self.removeUpBall()
+                ball.setGeometry(QtCore.QRect(ball.x()-10, ball.y(), 80, 60))
+                if ball.x() < 10:
+                    if (self._isLeftBall == True):
+                        self.removeLeftBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
@@ -64,9 +64,7 @@ class RunBalls(QtCore.QObject):
             self.ballList.remove(ball)
 
 
-    def createball(self):
-        x = 491
-        y = 10
+    def createball(self, x, y):
         if self._isUpBall:
             return
         ball = QtWidgets.QLabel(self._parent)
@@ -84,11 +82,9 @@ class RunBalls(QtCore.QObject):
     def removeUpBall(self):
         self._upBall.deleteLater()
         self._isUpBall = False
-        self._upTimer.stop()
+        self._upTimer.deleteLater()
 
-    def createball2(self):
-        x = 491
-        y = 699
+    def createball2(self, x, y):
         if self._isDownBall:
             return
         ball2 = QtWidgets.QLabel(self._parent)
@@ -107,64 +103,56 @@ class RunBalls(QtCore.QObject):
     def removeDownBall(self):
         self._downBall.deleteLater()
         self._isDownBall = False
-        self._upTimer2.stop()
+        self._upTimer2.deleteLater()
 
-    def createball3(self):
-        x = 565
-        y = 360
-        if self._isDownBall:
+    def createball3(self, x, y):
+        if self._isRightBall:
             return
-        ball = QtWidgets.QLabel(self._parent)
-        ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-        ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
-        ball.setScaledContents(True)
-        ball.setToolTip("3")
-        ball.show()
-        self._LeftBall3 = ball
-        self._isLeftBall3 = True
-        self._upTimer3 = QtCore.QTimer(self)
-        self._upTimer3.timeout.connect(self.removeUpBall)
-        self._upTimer3.start(2000)
-
-    def removeLeftDownBall(self):
-        self._downBall.deleteLater()
-        self._isDownBall = False
-        self._upTimer3.stop()
-
-    def createball4(self):
-        x = 420
-        y = 360
-        self.ball4 = QtWidgets.QLabel(self)
-        self.ball4.setGeometry(QtCore.QRect(x, y, 80, 60))
-        self.ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
-        self.ball4.setScaledContents(True)
-        self.ball4.show()
+        ball3 = QtWidgets.QLabel(self._parent)
+        ball3.setGeometry(QtCore.QRect(x, y, 80, 60))
+        ball3.setPixmap(QtGui.QPixmap("whiteBall.png"))
+        ball3.setScaledContents(True)
+        ball3.setToolTip("3")
+        ball3.show()
+        self._rightBall = ball3
+        self._isRightBall = True
+        self._rightTimer = QtCore.QTimer(self)
+        self._rightTimer.timeout.connect(self.removeRightBall)
+        self._rightTimer.start(2000)
 
     def removeRightBall(self):
-        self._downBall.deleteLater()
-        self._isDownBall = False
-        self._upTimer2.stop()
+        self._rightBall.deleteLater()
+        self._isRightBall = False
+        self._rightTimer.deleteLater()
 
-    def fire (self, zabaLook):
+    def createball4(self, x, y):
+        if self._isLeftBall:
+            return
+        ball4 = QtWidgets.QLabel(self._parent)
+        ball4.setGeometry(QtCore.QRect(x, y, 80, 60))
+        ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
+        ball4.setScaledContents(True)
+        ball4.setToolTip("4")
+        ball4.show()
+        self._leftBall = ball4
+        self._isLeftBall = True
+        self._leftTimer = QtCore.QTimer(self)
+        self._leftTimer.timeout.connect(self.removeLeftBall)
+        self._leftTimer.start(2000)
+
+    def removeLeftBall(self):
+        self._leftBall.deleteLater()
+        self._isLeftBall = False
+        self._leftTimer.deleteLater()
+
+    def fire (self, zabaLook,ball):
         if zabaLook == 1:
-            #x = 492
-            #y = 11
-            x = 492
-            y = 315
-            ball = QtWidgets.QLabel(self._parent)
-            ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-            ball.setPixmap(QtGui.QPixmap("redBall.png"))
-            ball.setScaledContents(True)
-            ball.setToolTip("1")
-            ball.show()
             self.ballList.append(ball)
             #self.ball.deleteLater()
 
         elif zabaLook == 2:
-            #x = 493
-            #y = 699
             x = 492
-            y = 380
+            y = 405
             ball = QtWidgets.QLabel(self._parent)
             ball.setGeometry(QtCore.QRect(x, y, 80, 60))
             ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
@@ -175,22 +163,24 @@ class RunBalls(QtCore.QObject):
             #self.ball.deleteLater()
 
         elif zabaLook == 3:
-            x = 974
+            x = 540
             y = 355
-            self.ball = QtWidgets.QLabel(self)
-            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-            self.ball.setPixmap(QtGui.QPixmap("blueBall.png"))
-            self.ball.setScaledContents(True)
-            self.ball.show()
-            self.ball.deleteLater()
+            ball = QtWidgets.QLabel(self._parent)
+            ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            ball.setPixmap(QtGui.QPixmap("blueBall.png"))
+            ball.setScaledContents(True)
+            ball.setToolTip("3")
+            ball.show()
+            self.ballList.append(ball)
+
 
         elif zabaLook == 4:
-            x = 10
+            x = 445
             y = 355
-            self.ball = QtWidgets.QLabel(self)
-            self.ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-            self.ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
-            self.ball.setScaledContents(True)
-            self.ball.show()
-
-            self.ball.deleteLater()
+            ball = QtWidgets.QLabel(self._parent)
+            ball.setGeometry(QtCore.QRect(x, y, 80, 60))
+            ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
+            ball.setScaledContents(True)
+            ball.setToolTip("4")
+            ball.show()
+            self.ballList.append(ball)
