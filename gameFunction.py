@@ -97,6 +97,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.itsGame.show()
         self.zaba.show()
         self.gameZuma()
+        self.fireBallFunction()
 
         # self.setMouseTracking(True)
 
@@ -131,25 +132,30 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
             self.zaba.setPixmap(QPixmap("zabaMid.png"))
             self.zabaLook = 1
             self.fireBallFunction()
+            self.ballZabaMove()
 
         elif e.key() == Qt.Key_A:
             self.zaba.setPixmap(QPixmap("zabaLeft.png"))
             self.zabaLook = 4
             self.fireBallFunction()
+            self.ballZabaMove()
 
         elif e.key() == Qt.Key_S:
             self.zaba.setPixmap(QPixmap("zabaBackside.png"))
             self.zabaLook = 2
             self.fireBallFunction()
+            self.ballZabaMove()
 
         elif e.key() == Qt.Key_D:
             self.zaba.setPixmap(QPixmap("zabaRight.png"))
             self.zabaLook = 3
             self.fireBallFunction()
+            self.ballZabaMove()
 
         elif e.key() == Qt.Key_E:
-            self.fireBallFunction()# Тут создаю шарик
+            self._runBalls.fire(self.zabaLook, self.ball)# Тут создаю шарик
             self.fireBall = False
+            self.fireBallFunction()
 
     def spawnBall(self):
         x = 491
@@ -185,40 +191,48 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
             self.x = 492
             self.y = 315
 
-        if self.zabaLook == 2:
+        elif self.zabaLook == 2:
             self.x = 492
             self.y = 405
 
-        if self.zabaLook == 3:
+        elif self.zabaLook == 3:
             self.x = 540
             self.y = 355
 
-        if self.zabaLook == 4:
+        elif self.zabaLook == 4:
             self.x = 445
             self.y = 355
 
         if self.fireBall == False:
             random_color = randint(1, 4)
 
-            ball = QtWidgets.QLabel(self._parent)
-            ball.setGeometry(QtCore.QRect(self.x, self.y, 80, 60))
+            self.ball = QtWidgets.QLabel(self)
+            self.ball.setGeometry(QtCore.QRect(self.x, self.y, 80, 60))
             if random_color == 3:
-                ball.setPixmap(QtGui.QPixmap("blueBall.png"))
-                ball.setScaledContents(True)
-                ball.setToolTip("3")
+                self.ball.setPixmap(QtGui.QPixmap("blueBall.png"))
+                self.ball.setScaledContents(True)
+                self.ball.setToolTip("3")
+
             if random_color == 2:
-                ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
-                ball.setScaledContents(True)
-                ball.setToolTip("2")
+                self.ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
+                self.ball.setScaledContents(True)
+                self.ball.setToolTip("2")
+
             if random_color == 1:
-                ball.setPixmap(QtGui.QPixmap("redBall.png"))
-                ball.setScaledContents(True)
-                ball.setToolTip("1")
+                self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
+                self.ball.setScaledContents(True)
+                self.ball.setToolTip("1")
+
             if random_color == 4:
-                ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
-                ball.setScaledContents(True)
-                ball.setToolTip("4")
-            ball.show()
+                self.ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
+                self.ball.setScaledContents(True)
+                self.ball.setToolTip("4")
+
+            self.ball.show()
             self.fireBall = True
 
-            self._runBalls.fire(self.zabaLook, self.zabaLook, ball)
+
+    def ballZabaMove(self):
+        if self.fireBall == True:
+            self.ball.setGeometry(QtCore.QRect(self.x, self.y, 80, 60))
+            #self._runBalls.fire(self.zabaLook, ball)
