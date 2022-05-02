@@ -16,6 +16,8 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
     fireBall = False
     x = 492
     y = 315
+    minusTime = 50
+    timer = 0
 
     #Тут обработка событий
     def __init__(self):
@@ -23,11 +25,12 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.setupUi(self)# Её не убирать !!!
         self._runBalls = RunBalls(self)
     # Тут создание лэйбла пример
-        '''self.my_text = QtWidgets.QLabel('Привет codeby!')
-        self.my_text.setAlignment(QtCore.Qt.AlignCenter)
-        self.my_text.show()'''
-        #self.label = QtWidgets.QLabel( self)
-        #self.label.setPixmap(QtGui.QPixmap("игровое поле1.jpg"))
+        self.GameTimer = QtCore.QTimer(self)
+        self.GameTimer.timeout.connect(self.time)
+
+        self.fireBallTimer = QtCore.QTimer(self)
+        self.fireBallTimer.timeout.connect(self.spawnBall)
+        self.fireBallTimer.start(2000)
 
         self.startMenu()
         self.startGame.clicked.connect(lambda: self.hideAll())
@@ -39,6 +42,14 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.exitGame.clicked.connect(lambda: self.exit())
         #self.exitGame.clicked.connect(MainWindow.) Тут надо написать выход из программы
 
+
+    def time (self):
+        gameSettings.minusTime -=1
+        if (gameSettings.minusTime == 0):
+            self.menu()
+            self.welcome.setText('ВЫ ПРОИГРАЛИ!')
+        self.timeGame.setText(f'Осталось времени: {gameSettings.minusTime}')
+
     #Стартовое меню
     def startMenu(self):
         self.mainMenu.hide()
@@ -48,6 +59,11 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.gameZon1.hide()
         self.gameZon2.hide()
         self.gameZon3.hide()
+        self.timeGame.hide()
+        gameSettings.timer = 0
+        gameSettings.minusTime = 50
+        self.timeGame.hide()
+
 
     #Тут выход из игры
     def exit (self):
@@ -64,6 +80,7 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.startGame.hide()
         self.settingsButton.hide()
         self.welcome.hide()
+
 
     #Тут игровые поля
     def firstGameZone(self):
@@ -99,6 +116,10 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.zaba.show()
         self.gameZuma()
         self.fireBallFunction()
+        self.GameTimer.start(1000)
+        self.timeGame.show()
+        self.ball.show()
+        self.fireBallTimer.start(2000)
 
         # self.setMouseTracking(True)
 
@@ -117,19 +138,17 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         self.gameZon2.hide()
         self.gameZon3.hide()
         self.changeMenu.hide()
+        self.GameTimer.stop()
+        self.timeGame.hide()
+        self.fireBallTimer.stop()
+        gameSettings.minusTime = 50
+        self.ball.hide()
+        self.welcome.setText("<html><head/><body><p><span style=\" font-size:18pt;\">Добро пожаловать в мою игру</span></p></body></html>")
 
-        #Тут убираю мячика когда сделаю их удаление их надо будет удалить
-        #self.ball.hide() Эту скорее всего надо оставить
 
-        #self.ball2.hide()
-        #self.ball3.hide()
-        #self.ball4.hide()
 
     def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Q:
-            self.spawnBall()
-
-        elif e.key() == Qt.Key_W:
+        if e.key() == Qt.Key_W:
             self.zaba.setPixmap(QPixmap("zabaMid.png"))
             self.zabaLook = 1
             self.fireBallFunction()

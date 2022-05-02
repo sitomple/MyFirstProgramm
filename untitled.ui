@@ -197,6 +197,24 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Выберите Игровое поле среди предложенных:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QLabel" name="timeGame">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Осталось времени: </string>
+    </property>
+   </widget>
    <zorder>itsGame</zorder>
    <zorder>welcome</zorder>
    <zorder>mainMenu</zorder>
@@ -209,6 +227,7 @@
    <zorder>gameZon2</zorder>
    <zorder>gameZon3</zorder>
    <zorder>changeMenu</zorder>
+   <zorder>timeGame</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
