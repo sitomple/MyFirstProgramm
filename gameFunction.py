@@ -8,6 +8,7 @@ from random import choice, randint
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_untitled
 from balls import RunBalls
+from qball import QBall
 
 class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
     pole = 1
@@ -158,33 +159,25 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
             self.fireBallFunction()
 
     def spawnBall(self):
-        x = 491
-        y = 10
-        self.random(x, y)
-        x = 491
-        y = 699
-        self.random(x, y)
-        x = 974
-        y = 356
-        self.random(x, y)
-        x = 10
-        y = 356
-        self.random(x, y)
+        self.random()
+        self.random()
+        self.random()
+        self.random()
 
-    def random(self, x, y):
+    def random(self):
         random_number = randint(1, 4)
 
         if random_number == 1:
-            self._runBalls.createball(x, y)
+            self._runBalls.createball()
 
         elif random_number == 2:
-            self._runBalls.createball2(x, y)
+            self._runBalls.createball2()
 
         elif random_number == 3:
-            self._runBalls.createball3(x, y)
+            self._runBalls.createball3()
 
         elif random_number == 4:
-            self._runBalls.createball4(x, y)
+            self._runBalls.createball4()
 
     def fireBallFunction(self):
         if self.zabaLook == 1:
@@ -206,26 +199,30 @@ class gameSettings(QtWidgets.QMainWindow, ui_untitled.Ui_MainWindow):
         if self.fireBall == False:
             random_color = randint(1, 4)
 
-            self.ball = QtWidgets.QLabel(self)
+            self.ball = QBall(self)
             self.ball.setGeometry(QtCore.QRect(self.x, self.y, 80, 60))
             if random_color == 3:
                 self.ball.setPixmap(QtGui.QPixmap("blueBall.png"))
                 self.ball.setScaledContents(True)
+                self.ball.setBallColor('blue')
                 self.ball.setToolTip("3")
 
             if random_color == 2:
                 self.ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
                 self.ball.setScaledContents(True)
+                self.ball.setBallColor('yellow')
                 self.ball.setToolTip("2")
 
             if random_color == 1:
                 self.ball.setPixmap(QtGui.QPixmap("redBall.png"))
                 self.ball.setScaledContents(True)
+                self.ball.setBallColor('red')
                 self.ball.setToolTip("1")
 
             if random_color == 4:
                 self.ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
                 self.ball.setScaledContents(True)
+                self.ball.setBallColor('white')
                 self.ball.setToolTip("4")
 
             self.ball.show()

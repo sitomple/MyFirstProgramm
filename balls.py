@@ -8,6 +8,7 @@ from PyQt5.QtCore import Qt, QPoint, QEvent
 from PyQt5.QtGui import QPainter, QColor
 from random import choice, randint
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from qball import QBall
 import gameFunction
 
 
@@ -29,37 +30,37 @@ class RunBalls(QtCore.QObject):
         removeList = []
         for ball in self.ballList:
 
-            if ball.toolTip() == '1':
-                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-10, 80, 60))
+            if ball.toolTip() == "1":
+                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()-40, 80, 60))
                 if ball.y() < 11:
                     if (self._isUpBall == True):
-                        if ball.pixmap() == self._upBall.pixmap():
+                        if (ball.ballColor() == self._upBall.ballColor()):
                             self.removeUpBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
-            if ball.toolTip() == '2':
-                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()+10, 80, 60))
+            if ball.toolTip() == "2":
+                ball.setGeometry(QtCore.QRect(ball.x(), ball.y()+40, 80, 60))
                 if ball.y() > 699:
                     if (self._isDownBall == True):
-                        if ball.pixmap() == self._downBall.pixmap():
+                        if (ball.pixmap() == self._downBall.pixmap()):
                             self.removeDownBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
-            if ball.toolTip() == '3':
-                ball.setGeometry(QtCore.QRect(ball.x()+10, ball.y(), 80, 60))
+            if ball.toolTip() == "3":
+                ball.setGeometry(QtCore.QRect(ball.x()+40, ball.y(), 80, 60))
                 if ball.x() > 974:
-                    if self._isRightBall == True:
+                    if (self._isRightBall == True):
                         if (ball.pixmap() == self._rightBall.pixmap()):
                             self.removeRightBall()
                     ball.deleteLater()
                     removeList.append(ball)
 
-            if ball.toolTip() == '4':
-                ball.setGeometry(QtCore.QRect(ball.x()-10, ball.y(), 80, 60))
+            if ball.toolTip() == "4":
+                ball.setGeometry(QtCore.QRect(ball.x()-40, ball.y(), 80, 60))
                 if ball.x() < 10:
-                    if self._isLeftBall == True:
+                    if (self._isLeftBall == True):
                         if (ball.pixmap() == self._leftBall.pixmap()):
                             self.removeLeftBall()
                     ball.deleteLater()
@@ -69,12 +70,26 @@ class RunBalls(QtCore.QObject):
             self.ballList.remove(ball)
 
 
-    def createball(self, x, y):
+    def createball(self):
         if self._isUpBall:
             return
-        ball = QtWidgets.QLabel(self._parent)
+        ball = QBall(self._parent)
+        x = 491
+        y = 10
         ball.setGeometry(QtCore.QRect(x, y, 80, 60))
-        ball.setPixmap(QtGui.QPixmap("redBall.png"))
+        random_number = randint(1, 4)
+        if random_number == 1:
+            ball.setPixmap(QtGui.QPixmap("redBall.png"))
+            ball.setBallColor('red')
+        if random_number == 2:
+            ball.setPixmap(QtGui.QPixmap("blueBall.png"))
+            ball.setBallColor('blue')
+        if random_number == 3:
+            ball.setPixmap(QtGui.QPixmap("yellowBall.png"))
+            ball.setBallColor('yellow')
+        if random_number == 4:
+            ball.setPixmap(QtGui.QPixmap("whiteBall.png"))
+            ball.setBallColor('white')
         ball.setScaledContents(True)
         ball.setToolTip("1")
         ball.show()
@@ -89,12 +104,22 @@ class RunBalls(QtCore.QObject):
         self._isUpBall = False
         self._upTimer.deleteLater()
 
-    def createball2(self, x, y):
+    def createball2(self):
         if self._isDownBall:
             return
         ball2 = QtWidgets.QLabel(self._parent)
+        x = 491
+        y = 699
         ball2.setGeometry(QtCore.QRect(x, y, 80, 60))
-        ball2.setPixmap(QtGui.QPixmap("blueBall.png"))
+        random_number = randint(1, 4)
+        if random_number == 1:
+            ball2.setPixmap(QtGui.QPixmap("redBall.png"))
+        if random_number == 2:
+            ball2.setPixmap(QtGui.QPixmap("blueBall.png"))
+        if random_number == 3:
+            ball2.setPixmap(QtGui.QPixmap("yellowBall.png"))
+        if random_number == 4:
+            ball2.setPixmap(QtGui.QPixmap("whiteBall.png"))
         ball2.setScaledContents(True)
         ball2.setToolTip("2")
         ball2.show()
@@ -110,12 +135,22 @@ class RunBalls(QtCore.QObject):
         self._isDownBall = False
         self._upTimer2.deleteLater()
 
-    def createball3(self, x, y):
+    def createball3(self):
         if self._isRightBall:
             return
         ball3 = QtWidgets.QLabel(self._parent)
+        x = 974
+        y = 356
         ball3.setGeometry(QtCore.QRect(x, y, 80, 60))
-        ball3.setPixmap(QtGui.QPixmap("whiteBall.png"))
+        random_number = randint(1, 4)
+        if random_number == 1:
+            ball3.setPixmap(QtGui.QPixmap("redBall.png"))
+        if random_number == 2:
+            ball3.setPixmap(QtGui.QPixmap("blueBall.png"))
+        if random_number == 3:
+            ball3.setPixmap(QtGui.QPixmap("yellowBall.png"))
+        if random_number == 4:
+            ball3.setPixmap(QtGui.QPixmap("whiteBall.png"))
         ball3.setScaledContents(True)
         ball3.setToolTip("3")
         ball3.show()
@@ -130,12 +165,22 @@ class RunBalls(QtCore.QObject):
         self._isRightBall = False
         self._rightTimer.deleteLater()
 
-    def createball4(self, x, y):
+    def createball4(self):
         if self._isLeftBall:
             return
         ball4 = QtWidgets.QLabel(self._parent)
+        x = 10
+        y = 356
         ball4.setGeometry(QtCore.QRect(x, y, 80, 60))
-        ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
+        random_number = randint(1, 4)
+        if random_number == 1:
+            ball4.setPixmap(QtGui.QPixmap("redBall.png"))
+        if random_number == 2:
+            ball4.setPixmap(QtGui.QPixmap("blueBall.png"))
+        if random_number == 3:
+            ball4.setPixmap(QtGui.QPixmap("yellowBall.png"))
+        if random_number == 4:
+            ball4.setPixmap(QtGui.QPixmap("whiteBall.png"))
         ball4.setScaledContents(True)
         ball4.setToolTip("4")
         ball4.show()
